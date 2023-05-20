@@ -502,6 +502,9 @@ class MolGrid:
             else:
                 # When no subset is defined, all columns are displayed.
                 subset = df.columns.tolist()
+        else:
+            # work on a copy
+            subset = subset[:]
 
         if "mols2grid-id" not in subset:
             subset.insert(0, "mols2grid-id")
@@ -932,6 +935,8 @@ class MolGrid:
             else:
                 # When no subset is defined, all columns are displayed.
                 subset = df.columns.tolist()
+        else:
+            subset = subset[:]
 
         if "mols2grid-id" not in subset:
             subset.insert(0, "mols2grid-id")
