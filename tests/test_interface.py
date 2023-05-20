@@ -227,7 +227,8 @@ def test_selection_check_uncheck_invert(driver: FirefoxDriver, html_doc):
 
 @pytest.mark.parametrize("prerender", [True, False])
 def test_image_size(driver: FirefoxDriver, df, prerender):
-    grid = get_grid(df, size=(100, 100), prerender=prerender)
+    size = (200, 300)
+    grid = get_grid(df, size=size, prerender=prerender)
     doc = get_doc(
         grid,
         {
@@ -241,7 +242,7 @@ def test_image_size(driver: FirefoxDriver, df, prerender):
     if not prerender:
         driver.wait_for_img_load()
     img = driver.find_by_css_selector("#mols2grid .m2g-cell .data-img *")
-    assert img.size == {"height": 100.0, "width": 100.0}
+    assert img.size == {"width": size[0], "height": size[1]}
 
 
 def test_image_use_coords(driver: FirefoxDriver, df):
