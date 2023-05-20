@@ -46,8 +46,8 @@ class MolGrid:
     """Class that handles drawing molecules, rendering the HTML document and
     saving or displaying it in a notebook
 
-    Parameters: Data
-    ----------------
+    Parameters
+    ----------
     df : pandas.DataFrame, dict or list, required
         Dataframe containing a SMILES or mol column, or dictionary containing a
         list of SMILES, or list of dictionnaries containing a SMILES field
@@ -58,9 +58,6 @@ class MolGrid:
         atom/bonds annotations from this will be used for depiction
     rename : dict or None, default=None
         Rename the properties in the final document
-
-    Parameters: Display
-    -------------------
     size : tuple, default=(160, 120)
         The size of the drawing canvas. The cell minimum width is set to the
         width of the image, so if the cell padding is increased, the image will
@@ -71,11 +68,11 @@ class MolGrid:
         Prerender images for the entire dataset, or generate them on-the-fly.
         Prerendering is slow and memory-hungry, but required when ``template="static"``
         or ``useSVG=False``.
+    name : str, default="default"
+        Name of the grid. Used when retrieving selections from multiple grids
+        at the same time
     cache_selection : bool, default=False
         Restores the selection from a previous grid with the same name
-
-    Parameters: Mols
-    ----------------
     removeHs : bool, default=False
         Remove hydrogen atoms from the drawings
     use_coords : bool, default=False
@@ -86,12 +83,6 @@ class MolGrid:
         molecules in 2D
     MolDrawOptions : rdkit.Chem.Draw.rdMolDraw2D.MolDrawOptions or None, default=None
         Drawing options. Useful for making highly customized drawings
-
-    Parameters: Customization
-    -------------------------
-    name : str, default="default"
-        Name of the grid. Used when retrieving selections from multiple grids
-        at the same time
     kwargs : object
         :class:`~rdkit.Chem.Draw.rdMolDraw2D.MolDrawOptions` attributes, and
         the additional ``atomColourPalette``
@@ -367,12 +358,13 @@ class MolGrid:
     ):
         """Returns the HTML document for the "interactive" template
 
-        Parameters: Display
-        -------------------
+        Parameters
+        ----------
         subset: list or None, default=None
             Columns to be displayed in each cell of the grid. Each column's value
             will be displayed from top to bottom in the same order given here.
             Use ``"img"`` for the image of the molecule, and ``"mols2grid-id"`` for
+            the molecule's index in your input file.
             The ``"img"`` and ``"mols2grid-id"`` are always displayed by default.
         tooltip : list, None or False, default=None
             Columns to be displayed inside the tooltip. When no subset is set,
@@ -408,17 +400,11 @@ class MolGrid:
             you access to your selection (index and SMILES) through :func:`mols2grid.get_selection()`
             or :meth:`MolGrid.get_selection()`. In all cases, you can export your
             selection by clicking on the triple-dot menu.
-
-        Parameters: Mols
-        ----------------
         substruct_highlight : bool or None, default=None
             Highlight substructure when using the SMARTS search. Active by default
             when ``prerender=False``.
         single_highlight : bool, default=False
             Highlight only the first match of the substructure query
-
-        Parameters: CSS
-        ---------------
         border : str, default="1px solid #cccccc"
             Styling of the border around each cell
         gap : int, default=0
@@ -451,8 +437,6 @@ class MolGrid:
 
                 style={"__all__": lambda x: "color: red" if x["Solubility"] < -5 else ""}
 
-        Parameters: Customization
-        -------------------------
         custom_header : str or None, default=None
             Custom libraries to be loaded in the header of the document
         callback : str or callable, default=None
@@ -840,8 +824,8 @@ class MolGrid:
     ):
         """Returns the HTML document for the "static" template
 
-        Parameters: Display
-        -------------------
+        Parameters
+        ----------
         subset: list or None, default=None
             Columns to be displayed in each cell of the grid. Each column's value
             will be displayed from top to bottom in the same order given here.
@@ -875,9 +859,6 @@ class MolGrid:
             Whether to truncate the text in each cell if it's too long.
         n_cols : int, default=5
             Number of columns in the table
-
-        Parameters: CSS
-        --------------
         border : str, default="1px solid #cccccc"
             Styling of the border around each cell
         gap : int, default=0
@@ -908,8 +889,6 @@ class MolGrid:
 
                 style={"__all__": lambda x: "color: red" if x["Solubility"] < -5 else ""}
 
-        Parameters: Customization
-        -----------------------
         custom_header : str or None
             Custom libraries to be loaded in the header of the document
 

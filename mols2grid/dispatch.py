@@ -7,8 +7,7 @@ from pandas import DataFrame, Series
 from .molgrid import MolGrid
 
 _SIGNATURE = {
-    method: dict(inspect.signature(
-        getattr(MolGrid, method)).parameters.items())
+    method: dict(inspect.signature(getattr(MolGrid, method)).parameters.items())
     for method in ["render", "to_interactive", "to_static", "display"]
 }
 for method in ["render", "to_interactive", "to_static", "display"]:
@@ -38,8 +37,8 @@ def _prepare_kwargs(kwargs, kind):
 def display(arg, **kwargs):
     """Display molecules on an interactive grid
 
-    Parameters: Data
-    ----------------
+    Parameters
+    ----------
     arg : pandas.DataFrame, SDF file or list of molecules
         The input containing your molecules
     smiles_col : str or None, default="SMILES"
@@ -48,9 +47,6 @@ def display(arg, **kwargs):
         If a pandas DataFrame is used, name of the column with RDKit molecules
     rename : dict or None, default=None
         Rename the properties in the final document
-
-    Parameters: Display
-    -------------------
     template : str, default="interactive"
         Either ``"interactive"`` or ``"static"``. See ``render()`` for more details.
     size : tuple, default=(160, 120)
@@ -62,7 +58,7 @@ def display(arg, **kwargs):
     prerender : bool, default=False
         Prerender images for the entire dataset, or generate them on-the-fly.
         Prerendering is slow and memory-hungry, but required when ``template="static"``
-        o ``useSVG=False``.
+        or ``useSVG=False``.
     subset: list or None, default=None
         Columns to be displayed in each cell of the grid. Each column's value
         will be displayed from top to bottom in the same order given here.
@@ -110,6 +106,9 @@ def display(arg, **kwargs):
         you access to your selection (index and SMILES) through :func:`mols2grid.get_selection()`
         or :meth:`MolGrid.get_selection()`. In all cases, you can export your
         selection by clicking on the triple-dot menu.
+    name : str, default="default"
+        Name of the grid. Used when retrieving selections from multiple grids
+        at the same time
     cache_selection : bool, default=False
         Only available for the "interactive" template.
         Restores the selection from a previous grid with the same name
@@ -121,9 +120,6 @@ def display(arg, **kwargs):
     iframe_height : int or None, default=None
         Height of the frame. When set to ``None``, the height is set dynamically
         based on the content.
-
-    Parameters: Mols
-    ----------------
     removeHs : bool, default=False
         Remove hydrogen atoms from the drawings
     use_coords : bool, default=False
@@ -139,9 +135,6 @@ def display(arg, **kwargs):
         when ``prerender=False``.
     single_highlight : bool, default=False
         Highlight only the first match of the substructure query
-
-    Parameters: CSS
-    ---------------
     border : str, default="1px solid #cccccc"
         Styling of the border around each cell
     gap : int, default=0
@@ -176,11 +169,6 @@ def display(arg, **kwargs):
 
             style={"__all__": lambda x: "color: red" if x["Solubility"] < -5 else ""}
 
-    Parameters: Customization
-    -------------------------
-    name : str, default="default"
-        Name of the grid. Used when retrieving selections from multiple grids
-        at the same time
     custom_header : str or None, default=None
         Custom libraries to be loaded in the header of the document
     callback : str or None, default=None
@@ -285,7 +273,7 @@ def _(sdf, **kwargs):
 
 @save.register(Series)
 @save.register(list)
-@display.register(tuple)
+@save.register(tuple)
 def _(mols, **kwargs):
     template, kwargs, render_kwargs = _prepare_kwargs(kwargs, "save")
     output = kwargs.pop("output")
