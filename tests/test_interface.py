@@ -16,7 +16,6 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 
 import mols2grid
@@ -382,6 +381,7 @@ def test_moldrawoptions(driver: FirefoxDriver, df, kwargs, expected):
     assert str(hash_) == expected
 
 
+@pytest.mark.skipif(HEADLESS, reason="seem to only work when not headless")
 def test_hover_color(driver: FirefoxDriver, grid):
     doc = get_doc(grid, {"hover_color": "red"})
     driver.get(doc)
@@ -392,7 +392,11 @@ def test_hover_color(driver: FirefoxDriver, grid):
         .perform()
     )
     color = driver.execute_script(
-        f"return getComputedStyle(document.querySelector('#mols2grid .m2g-cell')).getPropertyValue('background-color');"
+        """
+        return getComputedStyle(
+            document.querySelector('#mols2grid .m2g-cell')
+        ).getPropertyValue('background-color');
+        """
     )
     assert color == "rgb(255, 0, 0)"
 
