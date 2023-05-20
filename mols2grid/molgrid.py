@@ -354,7 +354,8 @@ class MolGrid:
         # Customization
         custom_header=None,
         callback=None,
-        **kwargs,
+        # Internal
+        use_iframe=False,
     ):
         """Returns the HTML document for the "interactive" template
 
@@ -712,7 +713,7 @@ class MolGrid:
             selection=selection,
             truncate=truncate,
             sort_by=sort_by,
-            use_iframe=kwargs["use_iframe"],
+            use_iframe=use_iframe,
             #
             border=border,
             gap=gap,
@@ -820,7 +821,8 @@ class MolGrid:
         style=None,
         # Customization
         custom_header=None,
-        **kwargs,
+        # Internal
+        use_iframe=False,
     ):
         """Returns the HTML document for the "static" template
 
@@ -998,7 +1000,7 @@ class MolGrid:
             tooltip_trigger=repr(tooltip_trigger),
             tooltip_placement=repr(tooltip_placement),
             truncate=truncate,
-            use_iframe=kwargs["use_iframe"],
+            use_iframe=use_iframe,
             #
             border=border,
             gap=gap,
@@ -1026,8 +1028,7 @@ class MolGrid:
         iframe_sandbox="allow-scripts allow-same-origin allow-downloads allow-popups allow-modals",
         **kwargs,
     ):
-        """Render and display the grid
-         in a Jupyter notebook
+        """Render and display the grid in a Jupyter notebook
 
         Returns
         -------
