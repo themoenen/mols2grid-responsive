@@ -673,22 +673,14 @@ def test_static_template(driver: FirefoxDriver, sdf_path):
             subset=["mols2grid-id", "img"],
             tooltip=["_Name"],
             sort_by="_Name",
+            tooltip_trigger="hover",
         ),
     )
     driver.get(doc)
     el = driver.find_by_css_selector("#mols2grid td.col-0")
     assert el.find_element_by_class_name("data-mols2grid-id").text == "8"
-    (
-        ActionChains(driver)
-        .move_to_element(el.find_element_by_css_selector(".data-img *"))
-        .perform()
-    )
-    tooltip = driver.find_by_css_selector('div.popover[role="tooltip"]')
-    el = tooltip.find_element_by_class_name("popover-body")
-    assert (
-        el.get_attribute("innerHTML")
-        == "<strong>_Name</strong>: 1,3,5-trimethylbenzene"
-    )
+    tooltip = driver.get_tooltip_content(selector=".m2g-cell-0")
+    assert tooltip == "<strong>_Name</strong>: 1,3,5-trimethylbenzene"
     hash_ = driver.get_svg_hash("#mols2grid td .data-img")
     diff = hash_ - imagehash.hex_to_hash(
         "fffffe7ffe7ffe7ffe7ffe7ffc3ff10ff3cff3cff3cff3cff38fe1078c319e79"

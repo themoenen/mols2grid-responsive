@@ -111,12 +111,10 @@ class FirefoxDriver(webdriver.Firefox):
             By.CSS_SELECTOR, f'#mols2grid .m2g-actions option[value="{action}"]'
         ).click()
 
-    def get_tooltip_content(self, pause=0):
+    def get_tooltip_content(self, pause=0, selector=".m2g-cell .m2g-info"):
         (
             ActionChains(self)
-            .move_to_element(
-                self.find_by_css_selector("#mols2grid .m2g-cell .m2g-info")
-            )
+            .move_to_element(self.find_by_css_selector(f"#mols2grid {selector}"))
             .pause(pause)
             .perform()
         )

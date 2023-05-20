@@ -946,12 +946,6 @@ class MolGrid:
         # Always make surer the image comes first.
         subset = [subset.pop(subset.index("img"))] + subset
 
-        # Make a copy of id shown explicitely.
-        id_name = "mols2grid-id-display"
-        df[id_name] = df["mols2grid-id"]
-        subset = [id_name if x == "mols2grid-id" else x for x in subset]
-        id_display = f'<div class="data-{id_name}"></div>'
-
         if style is None:
             style = {}
         if transform is None:
@@ -971,7 +965,6 @@ class MolGrid:
                 div = [f'<div class="m2g-cell-{i}" style="{s}">']  # %%
             else:
                 div = [f'<div class="m2g-cell-{i}">']  # %%
-            div.append(id_display)
             for col in subset:
                 v = row[col]
                 if col == "img" and tooltip:
