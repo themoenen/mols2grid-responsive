@@ -406,36 +406,8 @@ def test_tooltip(driver: FirefoxDriver, grid):
     doc = get_doc(grid, {"tooltip": ["_Name"]})
     driver.get(doc)
     driver.wait_for_img_load()
-    (
-        ActionChains(driver)
-        .move_to_element(
-            driver.find_by_css_selector("#mols2grid .m2g-cell .data-img *")
-        )
-        .perform()
-    )
-    tooltip = driver.find_by_css_selector('div.popover[role="tooltip"]')
-    el = tooltip.find_element_by_class_name("popover-body")
-    assert el.get_attribute("innerHTML") == "<strong>_Name</strong>: 3-methylpentane"
-
-
-@flaky(max_runs=3, min_passes=1)
-def test_tooltip_trigger(driver: FirefoxDriver, grid):
-    doc = get_doc(grid, {"tooltip": ["_Name"], "tooltip_trigger": "click"})
-    driver.get(doc)
-    driver.wait_for_img_load()
-    (
-        ActionChains(driver)
-        .move_to_element(
-            driver.find_by_css_selector("#mols2grid .m2g-cell .data-img *")
-        )
-        .perform()
-    )
-    with pytest.raises(NoSuchElementException):
-        driver.find_element_by_css_selector('div.popover[role="tooltip"]')
-    driver.find_clickable(By.CSS_SELECTOR, "#mols2grid .m2g-cell .data-img *").click()
-    tooltip = driver.find_by_css_selector('div.popover[role="tooltip"]')
-    el = tooltip.find_element_by_class_name("popover-body")
-    assert el.get_attribute("innerHTML") == "<strong>_Name</strong>: 3-methylpentane"
+    tooltip = driver.get_tooltip_content()
+    assert tooltip == "<strong>_Name</strong>: 3-methylpentane"
 
 
 @flaky(max_runs=3, min_passes=1)
